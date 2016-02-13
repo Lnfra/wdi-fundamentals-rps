@@ -21,18 +21,41 @@ function randomPlay() {
 /*           Write Your Code Below            */
 ////////////////////////////////////////////////
 
+function validateInput(move){
+  return typeof move != 'undefined' && move.match('rock|paper|scissors')
+}
+
 function getPlayerMove(move) {
     // Write an expression that operates on a variable called `move`
     // If a `move` has a value, your expression should evaluate to that value.
     // However, if `move` is not specified / is null, your expression should equal `getInput()`.
-    return move || getInput();
+
+    //Try to get move, otherwise try to getInput(), as a last resort set a default value.
+    var result;
+    if(validateInput(move)){
+        result = move;
+    } else{
+        var input = getInput();
+        if(validateInput(input)){
+            result = input;
+        }else {
+            result = 'rock';
+        }
+    }
+    return result;
 }
 
 function getComputerMove(move) {
     // Write an expression that operates on a variable called `move`
     // If a `move` has a value, your expression should evaluate to that value.
     // However, if `move` is not specified / is null, your expression should equal `randomPlay()`.
-    return move || randomPlay();
+    var result;
+    if(validateInput(move)){
+        result = move;
+    } else{
+        result = randomPlay();
+    }
+    return result;
 }
 
 function getWinner(playerMove,computerMove) {
@@ -41,19 +64,19 @@ function getWinner(playerMove,computerMove) {
     // The rules of the game are that 'rock' beats 'scissors', 'scissors' beats 'paper', and 'paper' beats 'rock'.
 
 	// All Possible cases
-	// playerMove | computerMove | Winner
-	// rock		  | scissors	 | player
-	// scissors	  | paper		 | player
-	// paper	  | rock	     | player
-	// rock		  | paper		 | computer
-	// scissors	  | rock	     | computer
-	// paper	  | scissors     | computer
-	// rock		  | rock		 | tie
-	// scissors	  | scissors     | tie
-	// paper	  | paper	     | tie
-	
-    var winner;
-	
+	// playerMove  | computerMove  | Winner
+	// rock        | scissors      | player
+	// scissors    | paper         | player
+	// paper       | rock          | player
+	// rock        | paper         | computer
+	// scissors    | rock          | computer
+	// paper       | scissors      | computer
+	// rock	       | rock          | tie
+	// scissors    | scissors      | tie
+	// paper       | paper         | tie
+
+  var winner;
+
 	if (playerMove == computerMove){
 		winner = 'tie';
 	} else if (playerMove == 'rock' && computerMove == 'scissors'){
